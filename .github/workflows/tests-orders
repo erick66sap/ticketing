@@ -1,4 +1,4 @@
-name: Tests-orders
+name: tests-orders
 on:
   pull_request
 jobs:
