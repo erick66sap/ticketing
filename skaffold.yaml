@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2beta8
+kind: Config
+deploy:
+    kubectl:
+        manifests:
+        - ./infra/k8s/*
+build:
+    #local:
+    #    push: false
+    artifacts:
+        - image: 192.168.1.59:5000/ticketing_auth
+          context: auth  #folder auth
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './src/**/*.ts'
+              dest: .
+        - image: 192.168.1.59:5000/ticketing_client
+          context: client  
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './pages/**/*.js'
+              dest: .
+        - image: 192.168.1.59:5000/ticketing_tickets
+          context: tickets  
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './src/**/*.ts'
+              dest: .
+        - image: 192.168.1.59:5000/ticketing_orders
+          context: orders  
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './src/**/*.ts'
+              dest: .
+        - image: 192.168.1.59:5000/ticketing_expiration
+          context: expiration  
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './src/**/*.ts'
+              dest: .
+        - image: 192.168.1.59:5000/ticketing_payments
+          context: payments  
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            manual:
+            - src: './src/**/*.ts'
+              dest: .

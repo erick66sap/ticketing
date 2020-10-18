@@ -1,0 +1,6 @@
+//rename this file to stripe.ts to be able to mock the library
+export const stripe = {
+    charges: {
+        create: jest.fn().mockResolvedValue({})
+    },
+};

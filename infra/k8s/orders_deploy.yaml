@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: orders-deploy
+    namespace: node-ticketing
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: orders
+    template:
+        metadata:
+            labels:
+                app: orders
+        spec:
+            containers:
+            - name: orders
+              image: 192.168.1.59:5000/ticketing_orders:latest
+              env:
+                - name: NATS_CLIENT_ID
+                  valueFrom: 
+                    fieldRef:
+                        fieldPath: metadata.name
+                - name: NATS_URL
+                  value: 'http://natss-svc:4222' 
+                - name: NATS_CLUSTER_ID
+                  value: ticketing
+                - name: MONGO_URI
+                  value: 'mongodb://orders-mongo-svc/orders'
+                - name: JWT_KEY
+                  valueFrom:
+                    secretKeyRef:
+                        name: jwt-secret
+                        key: JWT_KEY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: orders-svc 
+    namespace: node-ticketing
+spec:
+    type: ClusterIP
+    selector:
+        app: orders
+    ports:
+    - name: orders
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

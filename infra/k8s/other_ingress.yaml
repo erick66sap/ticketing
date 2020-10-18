@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: nats-monitor-ingress
+    namespace: node-ticketing
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+    rules:
+        - host: nats-monitor.bpx-training.info
+          http:
+            paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                        name: natss-svc
+                        port:
+                            number: 8222
