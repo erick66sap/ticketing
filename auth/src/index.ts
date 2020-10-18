@@ -4,6 +4,8 @@ import { app }  from "./app";
 import {DatabaseConnectionError} from '@bpx-training/common';
 
 const start = async () => {
+    console.log('Starting app');
+    
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY must be defined');
     }
