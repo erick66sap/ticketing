@@ -14,6 +14,7 @@ const OrderShow =({order, currentuser})=>{
         },
         onSuccess: (payment) => {
             console.log(payment);
+            //clearInterval(timerId);
             router.push('/orders')
         }
     });

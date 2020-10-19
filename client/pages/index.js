@@ -42,34 +42,3 @@ LandingPage.getInitialProps = async (context, client, currentuser) => {
     //return {};    
 };
 export default LandingPage;
-
-//this does not work because it is within the container
-//const response = await axios.get('/api/users/currentuser');   
-//if we add the whole url it will work because ngnix will handle it. BETTER!!!
-//const response = await axios.get('http://node-ticketing.bpx-training.info/api/users/currentuser'); 
-//or
-//using the kubernetes service http://auth-svc/...  BAD!!! -> we need to habdle many services.
-//or for internal communication
-// http://<service name>.<namespace>.svc.cluster.local
-// http://auth-svc.node-ticketing.svc.cluster.local
-// we can communicate with nginx
-// http://k8-ingress-nginx-ingress.k8-ingress.svc.cluster.local
-//const response = await axios.get('http://k8-ingress-nginx-ingress.k8-ingress.svc.cluster.local/api/users/currentuser'); 
-
-//if (typeof window === 'undefined') {
-// we are on the server
-// we need on include the complete url
-//   console.log('running on the server');
-//   const {data} = await axios.get('http://k8-ingress-nginx-ingress.k8-ingress.svc.cluster.local/api/users/currentuser', {
-//       headers: req.headers
-//       //headers: {Host: 'node-ticketing.bpx-training.info'}
-//   }); 
-//   return data;
-//} else {
-//we are on the browser
-//do not need to include the full url
-//   console.log('running on the browser');
-//   const {data} = await axios.get('/api/users/currentuser'); 
-//   return data;
-//}
-
