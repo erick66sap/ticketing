@@ -40,8 +40,8 @@ const start = async () => {
         
     }
     catch (err) {
-        //console.error(err);
-        throw new DatabaseConnectionError();
+        console.error(err);
+        //throw new DatabaseConnectionError();
     }
 
 } ;

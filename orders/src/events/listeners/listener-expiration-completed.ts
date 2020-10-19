@@ -20,7 +20,8 @@ export class ExpirationCompletedListener extends Listener<ExpirationCompletedEve
         if(order.status === OrderStatus.Completed) {
             //throw new Error('Order is completed and can not be cancelled');
             console.log('Order is completed and can not be cancelled');
-            //return msg.ack();
+            msg.ack();
+            return ;
         }
 
         order.set({

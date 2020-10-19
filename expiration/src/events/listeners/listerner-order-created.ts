@@ -9,6 +9,8 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
         
+        msg.ack();
+
         const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
         console.log('waiting this many miliseconds to process the job: ',delay );
 
@@ -18,7 +20,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
             delay // or just delay: delay
         });
 
-        msg.ack();
+        
 
     }
 }
