@@ -1,0 +1,23 @@
+name: deploy-auth
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - 'auth/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd auth && docker build -t <>/ticketing_auth .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secret.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secret.DOCKER_PASSWORD }}
+      - run: docker push <>/ticketing_auth
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secret.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kebernetes cluster kubeconfig save ticketing
+      - run: kubectl rollout restart deployment auth-deploy
